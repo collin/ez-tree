@@ -49,6 +49,7 @@ const CanvasNode = view(({ node }) => {
       }}
       onDoubleClick={event => {
         event.stopPropagation()
+        event.preventDefault()
         node.addChild()
       }}
       onClick={event => {
@@ -81,6 +82,7 @@ const Node = view(({ node }) => {
       <label
         onDoubleClick={event => {
           event.stopPropagation()
+          event.preventDefault()
           node.addChild()
         }}
         onClick={event => {
