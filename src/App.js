@@ -7,6 +7,7 @@ const makeNode = () => {
     children: [],
     type: 'node',
     highlighted: false,
+    selected: false,
 
     addChild () {
       node.children.push(makeNode())
@@ -14,6 +15,10 @@ const makeNode = () => {
   })
   return node
 }
+
+const ux = store({
+  selectedNodes: [],
+})
 
 class App extends Component {
   constructor () {
@@ -36,13 +41,19 @@ const CanvasNode = view(({ node }) => {
     <div
       style={{
         border: '1px solid black',
-        outline: node.highlighted ? '1px dashed red' : undefined,
+        outline: ux.selectedNodes[0] === node ? '1px dashed blue'
+          : node.highlighted ? '1px dashed red' : undefined,
         margin: '5px',
         padding: '5px',
         display: 'flex',
       }}
-      onClick={event => {
+      onDoubleClick={event => {
+        event.stopPropagation()
         node.addChild()
+      }}
+      onClick={event => {
+        event.stopPropagation()
+        ux.selectedNodes = [node]
       }}
       onMouseOver={event => {
         event.stopPropagation()
@@ -63,12 +74,18 @@ const Node = view(({ node }) => {
     <div
       style={{
         marginLeft: '10px',
-        outline: node.highlighted ? '1px dashed red' : undefined,
+        outline: ux.selectedNodes[0] === node ? '1px dashed blue'
+          : node.highlighted ? '1px dashed red' : undefined,
       }}
     >
       <label
-        onClick={event => {
+        onDoubleClick={event => {
+          event.stopPropagation()
           node.addChild()
+        }}
+        onClick={event => {
+          event.stopPropagation()
+          ux.selectedNodes = [node]
         }}
         onMouseOver={event => {
           event.stopPropagation()
