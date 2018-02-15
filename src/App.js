@@ -7,7 +7,6 @@ const makeNode = () => {
     children: [],
     type: 'node',
     highlighted: false,
-    selected: false,
 
     addChild () {
       node.children.push(makeNode())
